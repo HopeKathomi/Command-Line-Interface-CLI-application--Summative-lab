@@ -12,10 +12,19 @@ class Project:
         self.user = None
         self.tasks = []
 
+    def to_dict(self):
+        return {
+            "title" : self.title,
+            "description" : self.description,
+            "due_date" : self.due_date,
+            "tasks" :self.tasks
+        }
+
     @classmethod
     def create_project(cls):
         title, description, due_date = cls.get_project_details()
         project = cls(title, description, due_date)
+        cls._projects[title] = project
         return project
 
     @staticmethod

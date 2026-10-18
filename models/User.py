@@ -1,4 +1,5 @@
 import argparse
+import json
 
 
 class User:
@@ -14,7 +15,8 @@ class User:
         self.projects = []
 
     def add_user_to_list(self, object):
-        User._users_list[self.name] = object
+        if self.name not in User._users_list:
+            User._users_list[self.name] = object
 
     def add_projects(self, project):
         if project not in self.projects:
@@ -51,5 +53,6 @@ class User:
         else:
             return input("👤 Enter User's name: ")
 
+    
     def __repr__(self):
         return f"User({self.name!r}, {self.email!r})"
