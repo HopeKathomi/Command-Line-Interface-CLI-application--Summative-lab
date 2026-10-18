@@ -1,7 +1,8 @@
 import argparse
+from templates.Project_template import Project_template
 
 
-class Project:
+class Project(Project_template):
 
     _projects = {}
 

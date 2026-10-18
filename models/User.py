@@ -1,5 +1,4 @@
 import argparse
-import json
 
 
 class User:
@@ -13,14 +12,14 @@ class User:
         self.email = email
         # self._user_id
         self.projects = []
+    
+    def add_projects(self, project):
+        if project not in self.projects:
+            self.projects.append(project)
 
     def add_user_to_list(self, object):
         if self.name not in User._users_list:
             User._users_list[self.name] = object
-
-    def add_projects(self, project):
-        if project not in self.projects:
-            self.projects.append(project)
 
     def to_dict(self):
         return {
@@ -45,13 +44,14 @@ class User:
 
     @staticmethod
     def get_name():
-        parser = argparse.ArgumentParser()
-        parser.add_argument("name", nargs="?")
-        args = parser.parse_args()
-        if args.name:
-            return args.name
-        else:
-            return input("👤 Enter User's name: ")
+        while True:
+            parser = argparse.ArgumentParser()
+            parser.add_argument("name", nargs="?")
+            args = parser.parse_args()
+            if args.name:
+                return args.name
+            else:
+                return input("👤 Enter User's name: ")
 
     
     def __repr__(self):
