@@ -1,5 +1,6 @@
 import argparse
 
+
 class User:
 
     _users_list = {}
@@ -12,16 +13,27 @@ class User:
         # self._user_id
         self.projects = []
 
+    def add_user_to_list(self, object):
+        User._users_list[self.name] = object
+
+    def add_projects(self, project):
+        if project not in self.projects:
+            self.projects.append(project)
+
+    def to_dict(self):
+        return {
+            "name" : self.name,
+            "email" : self.email,
+            "projects": self.projects
+        }
+
     @classmethod
     def create_user(cls):
         name = cls.get_name()
         email = f"{name}@email.com"
         obj = cls(name, email)
-        obj.add_user_to_list()
+        obj.add_user_to_list(obj)
         return obj
-
-    def add_user_to_list(self):
-       User._users_list[self.name] = self.email
 
     # @staticmethod
     # def generate_id():
@@ -32,7 +44,7 @@ class User:
     @staticmethod
     def get_name():
         parser = argparse.ArgumentParser()
-        parser.add_argument("name", nargs = "?")
+        parser.add_argument("name", nargs="?")
         args = parser.parse_args()
         if args.name:
             return args.name

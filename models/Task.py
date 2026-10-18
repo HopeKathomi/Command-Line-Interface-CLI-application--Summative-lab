@@ -4,7 +4,5 @@ class Task:
         self.status = status
         self.assigned_to = assigned_to
 
-    
-
     def __repr__(self):
             return f"Task({self.title!r}, {self.status!r}, {self.assigned_to!r})"
