@@ -9,6 +9,7 @@ class Project:
         self.title = title
         self.description = description
         self.due_date = due_date
+        self.user = None
         self.tasks = []
 
     @classmethod

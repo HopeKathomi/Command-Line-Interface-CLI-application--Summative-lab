@@ -7,4 +7,5 @@ print(f"{User.welcome_message}")
 # print(User.create_user())
 # print(User._users_list)
 
-print(Project.create_project())
+Road = Project.create_project()
+print(Road.title)
