@@ -2,10 +2,23 @@
     "Users": {
         "hope": {
             "name": "hope",
-            "email": "hope@email.com",
-            "projects": [
-                "roads"
-            ]
+            "email": "hope@email.coke",
+            "projects": []
+        },
+        "kathomi": {
+            "name": "kathomi",
+            "email": "hope@email.coke",
+            "projects": []
+        },
+        "marveline": {
+            "name": "marveline",
+            "email": "hope@email.coke",
+            "projects": []
+        },
+        "Nyaga": {
+            "name": "Nyaga",
+            "email": "hope@email.coke",
+            "projects": []
         }
     },
     "Projects": {
