@@ -3,22 +3,32 @@
         "hope": {
             "name": "hope",
             "email": "hope@email.coke",
-            "projects": []
+            "projects": [
+                "roads",
+                "water"
+            ]
         },
         "kathomi": {
             "name": "kathomi",
             "email": "hope@email.coke",
-            "projects": []
+            "projects": [
+                "water"
+            ]
         },
         "marveline": {
             "name": "marveline",
             "email": "hope@email.coke",
-            "projects": []
+            "projects": [
+                "water"
+            ]
         },
         "Nyaga": {
             "name": "Nyaga",
             "email": "hope@email.coke",
-            "projects": []
+            "projects": [
+                "railway",
+                "rail"
+            ]
         }
     },
     "Projects": {

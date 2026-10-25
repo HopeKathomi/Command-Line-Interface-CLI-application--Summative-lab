@@ -20,20 +20,58 @@ def add_user(args):
         json.dump(data, file, indent=4)
 
 
-
 def list_users(args):
     print("List of users:")
     with open("data/Project_data.json", "r") as file:
         data = json.load(file)
 
-        for user_name in data.get("Users", {}).keys():
+        for user_name in data.get("Users",{}).keys():
             print(user_name)
 
-    # with open("data/Project_data.json", "w") as file:
-    #     json.dump(data, file, indent=4)
 
-def add_project_to_user(args):
+def get_users_projects(args):
     pass
+
+
+def create_project(args):
+    print("New project:")
+    print("Title: ", args.title)
+    print("Description: ", args.description)
+    print("Due_date: ", args.due_date)
+    print("\nSelect a user to assign to this project:")
+    user = assign_project_to_user(args)
+    
+    
+
+def assign_project_to_user(args):
+    with open("data/Project_data.json", "r") as file:
+        data = json.load(file)
+
+        users = data.get("Users")
+        if not users:
+            print("No users found. Please create a user first.")
+            return
+        users = list(users)
+        for index, name in enumerate(users, start =1):
+                print(f"{index}. {name}")
+        
+        try:
+            choice = int(input("Enter the number of the user: "))
+
+            if choice < 1 or choice > len(users):
+                print("Invalid selection.")
+                return
+
+        except ValueError:
+            print("Please enter a valid number.")
+            return
+        choice = choice-1
+        selected_user = users[choice]
+        data["Users"][selected_user]["projects"].append(args.title)
+        with open("data/Project_data.json", "w") as file:
+            json.dump(data, file, indent = 4)
+        
+
 
 def list_projects(args):
     print("Here are your projects:")
@@ -51,11 +89,16 @@ add_user_parser.set_defaults(func=add_user)
 
 list_users_parser = subparsers.add_parser("list-users", help="List all users")
 list_users_parser.set_defaults(func=list_users)
-
 list_projects_parser = subparsers.add_parser(
     "list-projects", help="Lis all projects")
 list_projects_parser.set_defaults(func=list_projects)
 
+create_project_parser = subparsers.add_parser(
+    "create-project", help="Create a project")
+create_project_parser.add_argument("title")
+create_project_parser.add_argument("description")
+create_project_parser.add_argument("due_date")
+create_project_parser.set_defaults(func=create_project)
 
 args = parser.parse_args()
 args.func(args)
