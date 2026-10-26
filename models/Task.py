@@ -20,20 +20,20 @@ class Task:
         cls._tasks[title] = task
         return task
 
-    @staticmethod
-    def get_task_details():
-        while True:
-            parser = argparse.ArgumentParser()
-            parser.add_argument("project", nargs="?")
-            args = parser.parse_args()
+    # @staticmethod
+    # def get_task_details():
+    #     while True:
+    #         parser = argparse.ArgumentParser()
+    #         parser.add_argument("project", nargs="?")
+    #         args = parser.parse_args()
 
-            if args.project:
-                return args.project
-            else:
-                title = input("Enter task title: ")
-                status = input("Enter task status: ")
-                asigned_to = input("Enter person responsible: ")
-                return title, status, asigned_to
+    #         if args.project:
+    #             return args.project
+    #         else:
+    #             title = input("Enter task title: ")
+    #             status = input("Enter task status: ")
+    #             asigned_to = input("Enter person responsible: ")
+    #             return title, status, asigned_to
 
     def __repr__(self):
             return f"Task({self.title!r}, {self.status!r}, {self.assigned_to!r})"

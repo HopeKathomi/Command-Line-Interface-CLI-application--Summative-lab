@@ -25,7 +25,7 @@ def list_users(args):
     with open("data/Project_data.json", "r") as file:
         data = json.load(file)
 
-        for user_name in data.get("Users",{}).keys():
+        for user_name in data.get("Users", {}).keys():
             print(user_name)
 
 
@@ -40,8 +40,7 @@ def create_project(args):
     print("Due_date: ", args.due_date)
     print("\nSelect a user to assign to this project:")
     user = assign_project_to_user(args)
-    
-    
+
 
 def assign_project_to_user(args):
     with open("data/Project_data.json", "r") as file:
@@ -52,9 +51,9 @@ def assign_project_to_user(args):
             print("No users found. Please create a user first.")
             return
         users = list(users)
-        for index, name in enumerate(users, start =1):
-                print(f"{index}. {name}")
-        
+        for index, name in enumerate(users, start=1):
+            print(f"{index}. {name}")
+
         try:
             choice = int(input("Enter the number of the user: "))
 
@@ -69,14 +68,68 @@ def assign_project_to_user(args):
         selected_user = users[choice]
         data["Users"][selected_user]["projects"].append(args.title)
         with open("data/Project_data.json", "w") as file:
-            json.dump(data, file, indent = 4)
-        
+            json.dump(data, file, indent=4)
 
+def create_tasks_for_projects(args):
+    with open("data/Project_data.json", "r") as file:
+        data = json.load(file)
+
+    projects = data.get("Projects", {})
+
+    if not projects:
+        print("No projects found. Please create a project first.")
+        return
+
+    print("\nAvailable Projects:")
+
+    project_list = list(projects.keys())
+
+    for index, project_title in enumerate(project_list, start=1):
+        print(f"{index}. {project_title}")
+
+    try:
+        choice = int(input("Select a project number: "))
+
+        if choice < 1 or choice > len(project_list):
+            print("Invalid selection.")
+            return
+
+    except ValueError:
+        print("Please enter a valid number.")
+        return
+
+    selected_project_title = project_list[choice - 1]
+    selected_project = projects[selected_project_title]
+
+    task_title = input("Enter the task title: ").strip()
+
+    if not task_title:
+        print("Task title cannot be empty.")
+        return
+
+    selected_project.setdefault("tasks", [])
+
+    selected_project["tasks"].append({
+        "title": task_title,
+        "status": "pending",
+        "assigned_to": None
+    })
+
+    with open("data/Project_data.json", "w") as file:
+        json.dump(data, file, indent=4)
+
+    print(
+        f"Task '{task_title}' successfully added to "
+        f"'{selected_project_title}'."
+    )
 
 def list_projects(args):
     print("Here are your projects:")
-
     print(Project._projects)
+
+
+def create_tasks(args):
+    print("Create tasks for each project:")   
 
 
 parser = argparse.ArgumentParser(description="My CLI project manager")
@@ -100,20 +153,13 @@ create_project_parser.add_argument("description")
 create_project_parser.add_argument("due_date")
 create_project_parser.set_defaults(func=create_project)
 
+create_task_parser = subparsers.add_parser(
+    "Create-task", help="Create a task(s) for a project")
+create_task_parser.add_argument("title")
+create_task_parser.add_argument("status")
+create_task_parser.add_argument("assigned_to")
+create_task_parser.set_defaults(func=create_tasks_for_projects)
+
 args = parser.parse_args()
 args.func(args)
 
-# with open("data/Project_data.json", "r") as file:
-#     data = json.load(file)
-
-#     for user_name, user in User._users_list.items():
-#         data["Users"][user_name] = user.to_dict()
-
-#     # for project_title, project in Project._projects.items():
-#     #     data["Projects"][project_title] = project.to_dict()
-
-#     # for title, task in Task._tasks.items():
-#     #     data["Tasks"][title] = task.to_dict()
-
-# with open("data/Project_data.json", "w") as file:
-#     json.dump(data, file, indent=4)
