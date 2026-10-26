@@ -67,8 +67,8 @@ def assign_project_to_user(args):
         choice = choice-1
         selected_user = users[choice]
         data["Users"][selected_user]["projects"].append(args.title)
-        data["Projects"][args.title]=(
-            {"title": args.title, "name": args.description,"due_date":args.due_date})
+        data["Projects"][args.title] = (
+            {"title": args.title, "name": args.description, "due_date": args.due_date})
         with open("data/Project_data.json", "w") as file:
             json.dump(data, file, indent=4)
 
@@ -123,24 +123,19 @@ def create_tasks_for_projects(args):
     )
 
 
-def list_projects(args):
-    print("Here are your projects:")
-    print(Project._projects)
-
-
 parser = argparse.ArgumentParser(description="My CLI project manager")
 subparsers = parser.add_subparsers(dest="command", required=True)
 
 add_user_parser = subparsers.add_parser("add-user", help="Create user")
 add_user_parser.add_argument("name")
 add_user_parser.add_argument("email")
-add_user_parser.set_defaults(func=add_user)
+add_user_parser.set_defaults(func=User.add_user)
 
 list_users_parser = subparsers.add_parser("list-users", help="List all users")
 list_users_parser.set_defaults(func=list_users)
 list_projects_parser = subparsers.add_parser(
-    "list-projects", help="Lis all projects")
-list_projects_parser.set_defaults(func=list_projects)
+    "list-projects", help="List all projects")
+list_projects_parser.set_defaults(func=Project.list_projects)
 
 create_project_parser = subparsers.add_parser(
     "create-project", help="Create a project")
@@ -155,6 +150,11 @@ create_task_parser.add_argument("title")
 create_task_parser.add_argument("status")
 create_task_parser.add_argument("assigned_to")
 create_task_parser.set_defaults(func=create_tasks_for_projects)
+
+delete_project_parser = subparsers.add_parser(
+    "delete-project", help="Delete a project")
+delete_project_parser.add_argument("title")
+delete_project_parser.set_defaults(func=Project.delete_project)
 
 args = parser.parse_args()
 args.func(args)

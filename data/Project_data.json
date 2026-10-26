@@ -30,6 +30,11 @@
                 "railway",
                 "rail"
             ]
+        },
+        "kukie": {
+            "name": "kukie",
+            "email": "kukie@email.com",
+            "projects": []
         }
     },
     "Projects": {
@@ -39,14 +44,6 @@
             "due_date": "1",
             "tasks": [
                 "mahi-mahiu"
-            ]
-        },
-        "water": {
-            "title": "water",
-            "name": "mombasa",
-            "due_date": "14-9-2009",
-            "tasks": [
-                "add pump"
             ]
         }
     },

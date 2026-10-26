@@ -1,5 +1,5 @@
 import json
-
+from utils.data_util import load_data, save_data
 
 class User:
 
@@ -32,6 +32,18 @@ class User:
         obj = cls(name, email)
         obj.add_user_to_list(obj)
         return obj
+
+    def add_user(args):
+        user = User.create_user(args.name, args.email)
+        user.add_user_to_list(user)
+
+        print(f"User created: {user.name}")
+        print(f"Email: {user.email}")
+        data = load_data()
+        data["Users"][user.name] = user.to_dict()
+
+        with open("data/Project_data.json", "w") as file:
+            json.dump(data, file, indent=4)
 
     # @staticmethod
     # def generate_id():
