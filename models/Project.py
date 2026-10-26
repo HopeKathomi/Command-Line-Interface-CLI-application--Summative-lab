@@ -1,6 +1,5 @@
-import argparse
 from templates.Project_template import Project_template
-
+import json
 
 class Project(Project_template):
 
@@ -15,11 +14,15 @@ class Project(Project_template):
 
     def to_dict(self):
         return {
-            "title" : self.title,
-            "description" : self.description,
-            "due_date" : self.due_date,
-            "tasks" :self.tasks
+            "title": self.title,
+            "description": self.description,
+            "due_date": self.due_date,
+            "tasks": self.tasks
         }
+
+    def assign_user(self, user):
+        self.user = user
+        user.add_project(self)
 
     @classmethod
     def create_project(cls):
@@ -28,19 +31,19 @@ class Project(Project_template):
         cls._projects[title] = project
         return project
 
-    @staticmethod
-    def get_project_details():
-        parser = argparse.ArgumentParser()
-        parser.add_argument("project", nargs="?")
-        args = parser.parse_args()
+    # @staticmethod
+    # def get_project_details():
+    #     parser = argparse.ArgumentParser()
+    #     parser.add_argument("project", nargs="?")
+    #     args = parser.parse_args()
 
-        if args.project:
-            return args.project
-        else:
-            title = input("Enter project name: ")
-            description = input("Enter project description: ")
-            due_date = input("Enter due date: ")
-            return title, description, due_date
+    #     if args.project:
+    #         return args.project
+    #     else:
+    #         title = input("Enter project name: ")
+    #         description = input("Enter project description: ")
+    #         due_date = input("Enter due date: ")
+    #         return title, description, due_date
 
     def __repr__(self):
         return f"Project({self.title!r}, {self.description!r}, {self.due_date!r})"

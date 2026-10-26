@@ -2,9 +2,33 @@
     "Users": {
         "hope": {
             "name": "hope",
-            "email": "hope@email.com",
+            "email": "hope@email.coke",
             "projects": [
-                "roads"
+                "roads",
+                "water"
+            ]
+        },
+        "kathomi": {
+            "name": "kathomi",
+            "email": "hope@email.coke",
+            "projects": [
+                "water"
+            ]
+        },
+        "marveline": {
+            "name": "marveline",
+            "email": "hope@email.coke",
+            "projects": [
+                "water",
+                "water"
+            ]
+        },
+        "Nyaga": {
+            "name": "Nyaga",
+            "email": "hope@email.coke",
+            "projects": [
+                "railway",
+                "rail"
             ]
         }
     },
@@ -13,7 +37,17 @@
             "title": "roads",
             "description": "goodroads",
             "due_date": "1",
-            "tasks": []
+            "tasks": [
+                "mahi-mahiu"
+            ]
+        },
+        "water": {
+            "title": "water",
+            "name": "mombasa",
+            "due_date": "14-9-2009",
+            "tasks": [
+                "add pump"
+            ]
         }
     },
     "Tasks": {
