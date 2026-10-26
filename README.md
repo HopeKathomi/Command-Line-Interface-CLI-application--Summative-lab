@@ -1,29 +1,37 @@
-# CLI Project Management App
+# Python Project Management System
 
-A command-line project management application built with Python. The application allows users to create user profiles, manage projects, and record tasks associated with their projects.
+## 1. Project Overview
 
-## Features
+The **Python Project Management System** is a Python application designed to organise and manage users, projects, and tasks. It uses Object-Oriented Programming (OOP) to represent users, projects, and tasks as objects.
+
+The application allows users to be created, projects to be managed, and tasks to be tracked. It also supports converting objects into dictionaries using Python's `to_dict()` methods, making the data easier to store in JSON format.
+
+## 2. Features
 
 - **User Management:** Create users with a name and email address.
 - **Project Management:** Create projects with a title, description, and due date.
 - **Task Management:** Create tasks with a title, status, and assigned person.
-- **Object-Oriented Design:** Uses Python classes to represent users, projects, and tasks.
-- **JSON Data Persistence:** Stores application data in a JSON file.
-- **Dictionary-Based Storage:** Maintains collections of users, projects, and tasks using class-level dictionaries.
+- **Project Assignment:** Associate projects with users.
+- **Duplicate Prevention:** Prevent adding the same project more than once to a user's project list.
+- **Data Serialization:** Convert user, project, and task objects into dictionaries using `to_dict()`.
+- **Object Representation:** Use `__repr__()` methods to provide readable representations of objects.
+- **Class-Level Storage:** Use class attributes to maintain collections of users, projects, and tasks in memory.
 
-## Technologies Used
+## 3. Technologies Used
 
-- Python 3
-- `argparse` — for handling command-line arguments.
-- `json` — for reading and writing JSON data.
-- Object-Oriented Programming (OOP) — for structuring the application.
+- **Python 3** – Main programming language.
+- **JSON** – Imported for working with JSON data.
+- **argparse** – Imported in the task module for potential command-line argument handling.
+- **Object-Oriented Programming (OOP)** – Used to structure the application into classes.
 
-## Project Structure
+No third-party Python packages are required by the code shown.
+
+## 4. Project Structure
+
+The project can be organised as follows:
 
 ```text
-project-management-app/
-│
-├── main.py
+project-management-system/
 │
 ├── models/
 │   ├── User.py
@@ -33,186 +41,132 @@ project-management-app/
 ├── templates/
 │   └── Project_template.py
 │
-└── data/
-    └── Project_data.json
+├── data/
+│   └── Project_data.json
+│
+├── main.py
+└── README.md
 ```
 
-**Note:** The structure above is an example based on the imports in the application. Adjust the filenames and directories to match your actual project.
+*Note: Adjust the filenames and folders to match your actual project structure.*
 
-## How It Works
+## 5. Classes and Their Responsibilities
 
-### 1. User Class
+### 5.1 User Class
 
-The `User` class represents an individual user.
+The `User` class represents an individual user in the system.
 
-Each user has:
-- A name
-- An email address
-- A list of projects
+**Attributes:**
+- `name`: The user's name.
+- `email`: The user's email address.
+- `projects`: A list of projects associated with the user.
+- `_users_list`: A class-level dictionary for storing users.
+- `_next_id`: A class-level counter reserved for potential user ID generation.
 
-The class also maintains a shared dictionary, `_users_list`, to keep track of created users.
+**Methods:**
+- `add_projects(project)`: Adds a project to the user's list if it is not already present.
+- `add_user_to_list(object)`: Adds a user object to the class-level dictionary if the user's name is not already a key.
+- `to_dict()`: Converts the user object into a dictionary.
+- `create_user(name, email)`: Creates and registers a user object.
+- `__repr__()`: Returns a readable representation of the user.
 
-Example:
+### 5.2 Project Class
 
-```python
-user = User("Hope", "hope@email.com")
-```
+The `Project` class represents a project and inherits from `Project_template`.
 
-The `add_projects()` method associates a project entry with the user.
+**Attributes:**
+- `title`: The project's name.
+- `description`: A description of the project.
+- `due_date`: The project's deadline.
+- `user`: The user assigned to the project, initially `None`.
+- `tasks`: A list of tasks associated with the project.
+- `_projects`: A class-level dictionary for storing project objects.
 
-### 2. Project Class
+**Methods:**
+- `to_dict()`: Converts the project object into a dictionary.
+- `assign_user(user)`: Assigns a user to the project and attempts to add the project to that user's project list.
+- `create_project()`: Retrieves project details through `get_project_details()`, creates a project, and stores it in the class-level dictionary.
+- `__repr__()`: Returns a readable representation of the project.
 
-The `Project` class inherits from `Project_template` and represents a project.
+**Dependency:** The class requires `Project_template` from `templates/Project_template.py`. The template must provide a compatible `get_project_details()` method for `create_project()` to work.
 
-Each project has:
-- A title
-- A description
-- A due date
-- A user reference
-- A list of tasks
+### 5.3 Task Class
 
-The class maintains a dictionary, `_projects`, containing created project objects.
+The `Task` class represents an individual task within the project management system.
 
-Example:
+**Attributes:**
+- `title`: The task's name.
+- `status`: The current status of the task, such as `Pending` or `Completed`.
+- `assigned_to`: The person responsible for the task.
+- `_tasks`: A class-level dictionary for storing task objects.
 
-```python
-project = Project(
-    "AI Application",
-    "Build an AI application",
-    "2026-12-01"
-)
-```
+**Methods:**
+- `to_dict()`: Converts the task object into a dictionary.
+- `create_task()`: Retrieves task details through `get_task_details()`, creates a task, and stores it in the class-level dictionary.
+- `__repr__()`: Returns a readable representation of the task.
 
-### 3. Task Class
+**Note:** The current `Task` class does not define `get_task_details()`. This method must be implemented before `create_task()` can work.
 
-The `Task` class represents a task.
-
-Each task has:
-- A title
-- A status
-- An assigned person
-
-The class maintains a dictionary, `_tasks`, containing created task objects.
-
-Example:
-
-```python
-task = Task(
-    "Design database",
-    "In Progress",
-    "Hope"
-)
-```
-
-### 4. JSON Data Storage
-
-The application uses `data/Project_data.json` to store application records.
-
-The JSON file is expected to contain three top-level dictionaries:
-
-```json
-{
-    "Users": {},
-    "Projects": {},
-    "Tasks": {}
-}
-```
-
-The application converts objects into dictionaries through their `to_dict()` methods and writes the data to the JSON file.
-
-Example user record:
-
-```json
-{
-    "name": "Hope",
-    "email": "hope@email.com",
-    "projects": ["AI Application"]
-}
-```
-
-## Installation and Setup
+## 6. Installation and Setup
 
 ### Prerequisites
 
-Install Python 3.10 or later. The application uses Python's standard library for argument parsing and JSON operations.
+Ensure that Python 3 is installed on your computer.
 
-### 1. Clone the repository
-
-If the project is hosted on GitHub:
+Check your Python version by running:
 
 ```bash
-git clone <your-repository-url>
+python --version
 ```
 
-### 2. Navigate to the project directory
+### Clone the Repository
+
+If the project is hosted on GitHub, clone it using:
 
 ```bash
-cd project-management-app
+git clone <repository-url>
 ```
 
-### 3. Run the application
+Navigate into the project directory:
+
+```bash
+cd project-management-system
+```
+
+### Run the Application
+
+If `main.py` contains the application's entry point, run:
 
 ```bash
 python main.py
 ```
 
-On Windows, you can also use:
+The actual commands available will depend on how the application is implemented in `main.py`.
 
-```powershell
-py main.py
+## 7. Data Storage
+
+The classes include `to_dict()` methods that convert Python objects into dictionaries. These dictionaries can be serialised into JSON using Python's `json` module.
+
+For example:
+
+```python
+import json
+
+user = User.create_user("Hope", "hope@example.com")
+
+user_data = user.to_dict()
+
+print(json.dumps(user_data, indent=4))
 ```
 
-Follow the prompts to enter user, project, and task details.
-
-## Data Persistence
-
-The application reads existing JSON data and updates the `Users`, `Projects`, and `Tasks` dictionaries before writing the updated data back to the file.
-
-Ensure that `data/Project_data.json` exists and contains valid JSON before running the current implementation.
-
-Example initial file:
+Example output:
 
 ```json
 {
-    "Users": {},
-    "Projects": {},
-    "Tasks": {}
+    "name": "Hope",
+    "email": "hope@example.com",
+    "projects": []
 }
 ```
 
-## Learning Objectives
-
-This project provides practice with:
-
-- Defining classes and creating instances.
-- Using instance attributes and class attributes.
-- Working with class methods and static methods.
-- Passing objects between methods.
-- Managing relationships between users, projects, and tasks.
-- Converting objects into dictionaries with `to_dict()`.
-- Reading and writing JSON files.
-- Organizing Python code into modules and packages.
-
-## Future Improvements
-
-Potential enhancements include:
-
-- User authentication and login.
-- Assigning projects to their owners.
-- Associating tasks directly with projects.
-- Validating project due dates and task statuses.
-- Preventing duplicate usernames, project titles, and task titles.
-- Automatically creating the JSON data file if it does not exist.
-- Separating the CLI interface from application logic.
-- Adding automated tests with `pytest`.
-- Adding project editing, deletion, and listing functionality.
-
-## License
-MIT
-
-~
-## Author
-
-Hope Kathomi
-
-
+**Important:** The `

@@ -67,14 +67,17 @@ def assign_project_to_user(args):
         choice = choice-1
         selected_user = users[choice]
         data["Users"][selected_user]["projects"].append(args.title)
+        data["Projects"][args.title]=(
+            {"title": args.title, "name": args.description,"due_date":args.due_date})
         with open("data/Project_data.json", "w") as file:
             json.dump(data, file, indent=4)
+
 
 def create_tasks_for_projects(args):
     with open("data/Project_data.json", "r") as file:
         data = json.load(file)
 
-    projects = data.get("Projects", {})
+    projects = data.get("Projects", [])
 
     if not projects:
         print("No projects found. Please create a project first.")
@@ -109,11 +112,7 @@ def create_tasks_for_projects(args):
 
     selected_project.setdefault("tasks", [])
 
-    selected_project["tasks"].append({
-        "title": task_title,
-        "status": "pending",
-        "assigned_to": None
-    })
+    selected_project["tasks"].append(task_title)
 
     with open("data/Project_data.json", "w") as file:
         json.dump(data, file, indent=4)
@@ -123,13 +122,10 @@ def create_tasks_for_projects(args):
         f"'{selected_project_title}'."
     )
 
+
 def list_projects(args):
     print("Here are your projects:")
     print(Project._projects)
-
-
-def create_tasks(args):
-    print("Create tasks for each project:")   
 
 
 parser = argparse.ArgumentParser(description="My CLI project manager")
@@ -162,4 +158,3 @@ create_task_parser.set_defaults(func=create_tasks_for_projects)
 
 args = parser.parse_args()
 args.func(args)
-
