@@ -5,30 +5,6 @@ from models.User import User
 from models.Task import Task
 
 
-def add_user(args):
-    user = User.create_user(args.name, args.email)
-    user.add_user_to_list(user)
-
-    print(f"User created: {user.name}")
-    print(f"Email: {user.email}")
-
-    with open("data/Project_data.json", "r") as file:
-        data = json.load(file)
-        data["Users"][user.name] = user.to_dict()
-
-    with open("data/Project_data.json", "w") as file:
-        json.dump(data, file, indent=4)
-
-
-def list_users(args):
-    print("List of users:")
-    with open("data/Project_data.json", "r") as file:
-        data = json.load(file)
-
-        for user_name in data.get("Users", {}).keys():
-            print(user_name)
-
-
 def get_users_projects(args):
     pass
 
@@ -132,7 +108,8 @@ add_user_parser.add_argument("email")
 add_user_parser.set_defaults(func=User.add_user)
 
 list_users_parser = subparsers.add_parser("list-users", help="List all users")
-list_users_parser.set_defaults(func=list_users)
+list_users_parser.set_defaults(func=User.list_users)
+
 list_projects_parser = subparsers.add_parser(
     "list-projects", help="List all projects")
 list_projects_parser.set_defaults(func=Project.list_projects)

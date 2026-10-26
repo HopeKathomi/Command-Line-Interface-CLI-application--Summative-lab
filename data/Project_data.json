@@ -12,7 +12,8 @@
             "name": "kathomi",
             "email": "hope@email.coke",
             "projects": [
-                "water"
+                "water",
+                "water tower"
             ]
         },
         "marveline": {
@@ -34,7 +35,9 @@
         "kukie": {
             "name": "kukie",
             "email": "kukie@email.com",
-            "projects": []
+            "projects": [
+                "water tower"
+            ]
         }
     },
     "Projects": {
@@ -45,6 +48,11 @@
             "tasks": [
                 "mahi-mahiu"
             ]
+        },
+        "water tower": {
+            "title": "water tower",
+            "name": "20000Ltower",
+            "due_date": "12-12-2026"
         }
     },
     "Tasks": {

@@ -45,6 +45,14 @@ class User:
         with open("data/Project_data.json", "w") as file:
             json.dump(data, file, indent=4)
 
+    def list_users(args):
+        print("List of users:")
+        data = load_data()
+
+        for user_name in data.get("Users", {}).keys():
+            print(user_name)
+
+
     # @staticmethod
     # def generate_id():
     #     User._next_id +=1

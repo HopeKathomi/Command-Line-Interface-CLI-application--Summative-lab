@@ -32,6 +32,8 @@ class Project(Project_template):
         cls._projects[title] = project
         return project
 
+    
+
     def list_projects(args):
         print("Here are your projects:")
         print(Project._projects)
