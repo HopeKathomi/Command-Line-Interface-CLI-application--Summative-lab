@@ -3,7 +3,10 @@ import argparse
 from models.Project import Project
 from models.User import User
 from models.Task import Task
+from utils.data_util import load_data, save_data
+from rich.console import Console
 
+console = Console()
 
 def get_users_projects(args):
     pass
@@ -49,56 +52,6 @@ def assign_project_to_user(args):
             json.dump(data, file, indent=4)
 
 
-def create_tasks_for_projects(args):
-    with open("data/Project_data.json", "r") as file:
-        data = json.load(file)
-
-    projects = data.get("Projects", [])
-
-    if not projects:
-        print("No projects found. Please create a project first.")
-        return
-
-    print("\nAvailable Projects:")
-
-    project_list = list(projects.keys())
-
-    for index, project_title in enumerate(project_list, start=1):
-        print(f"{index}. {project_title}")
-
-    try:
-        choice = int(input("Select a project number: "))
-
-        if choice < 1 or choice > len(project_list):
-            print("Invalid selection.")
-            return
-
-    except ValueError:
-        print("Please enter a valid number.")
-        return
-
-    selected_project_title = project_list[choice - 1]
-    selected_project = projects[selected_project_title]
-
-    task_title = input("Enter the task title: ").strip()
-
-    if not task_title:
-        print("Task title cannot be empty.")
-        return
-
-    selected_project.setdefault("tasks", [])
-
-    selected_project["tasks"].append(task_title)
-
-    with open("data/Project_data.json", "w") as file:
-        json.dump(data, file, indent=4)
-
-    print(
-        f"Task '{task_title}' successfully added to "
-        f"'{selected_project_title}'."
-    )
-
-
 parser = argparse.ArgumentParser(description="My CLI project manager")
 subparsers = parser.add_subparsers(dest="command", required=True)
 
@@ -110,10 +63,6 @@ add_user_parser.set_defaults(func=User.add_user)
 list_users_parser = subparsers.add_parser("list-users", help="List all users")
 list_users_parser.set_defaults(func=User.list_users)
 
-list_projects_parser = subparsers.add_parser(
-    "list-projects", help="List all projects")
-list_projects_parser.set_defaults(func=Project.list_projects)
-
 create_project_parser = subparsers.add_parser(
     "create-project", help="Create a project")
 create_project_parser.add_argument("title")
@@ -121,12 +70,13 @@ create_project_parser.add_argument("description")
 create_project_parser.add_argument("due_date")
 create_project_parser.set_defaults(func=create_project)
 
+list_projects_parser = subparsers.add_parser(
+    "list-projects", help="List all projects")
+list_projects_parser.set_defaults(func=Project.list_projects)
+
 create_task_parser = subparsers.add_parser(
-    "Create-task", help="Create a task(s) for a project")
-create_task_parser.add_argument("title")
-create_task_parser.add_argument("status")
-create_task_parser.add_argument("assigned_to")
-create_task_parser.set_defaults(func=create_tasks_for_projects)
+    "create-task", help="Create a task(s) for a project")
+create_task_parser.set_defaults(func=Task.create_tasks_for_projects)
 
 delete_project_parser = subparsers.add_parser(
     "delete-project", help="Delete a project")

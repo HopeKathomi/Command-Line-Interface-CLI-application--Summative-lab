@@ -1,10 +1,12 @@
 import json
 from utils.data_util import load_data, save_data
+from rich.console import Console
 
 class User:
 
     _users_list = {}
     _next_id = 1000
+    console = Console()
 
     def __init__(self, name, email):
         self.name = name
@@ -37,20 +39,19 @@ class User:
         user = User.create_user(args.name, args.email)
         user.add_user_to_list(user)
 
-        print(f"User created: {user.name}")
-        print(f"Email: {user.email}")
+        User.console.print(f"[bold]User created[/bold]: {user.name}", style="blue")
+        User.console.print(f"[bold]Email[/bold]: {user.email}", style="blue")
         data = load_data()
         data["Users"][user.name] = user.to_dict()
 
-        with open("data/Project_data.json", "w") as file:
-            json.dump(data, file, indent=4)
+        save_data(data)
 
     def list_users(args):
-        print("List of users:")
         data = load_data()
 
+        User.console.print("List of users:", style="purple")
         for user_name in data.get("Users", {}).keys():
-            print(user_name)
+            User.console.print(user_name, style="blue")
 
 
     # @staticmethod

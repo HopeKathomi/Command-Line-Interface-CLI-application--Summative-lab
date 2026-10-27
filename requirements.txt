@@ -2,3 +2,4 @@ python-3.12.4
 argparse
 json
 pytest-7.4.4
+rich-15.0.0
