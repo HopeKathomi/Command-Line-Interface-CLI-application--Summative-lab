@@ -1,37 +1,42 @@
-# Python Project Management System
+# Python CLI Project Management System
 
 ## 1. Project Overview
 
-The **Python Project Management System** is a Python application designed to organise and manage users, projects, and tasks. It uses Object-Oriented Programming (OOP) to represent users, projects, and tasks as objects.
+The Python CLI Project Management System is a command-line application developed using Python. It allows users to manage users, projects, and project tasks through commands entered in the terminal.
 
-The application allows users to be created, projects to be managed, and tasks to be tracked. It also supports converting objects into dictionaries using Python's `to_dict()` methods, making the data easier to store in JSON format.
+The application uses Object-Oriented Programming (OOP) to organise its code into classes and stores user and project information in a JSON file.
+
+The system is designed to simplify project organisation by allowing users to create accounts, view registered users, create projects, assign projects to users, and add tasks to projects.
 
 ## 2. Features
 
-- **User Management:** Create users with a name and email address.
-- **Project Management:** Create projects with a title, description, and due date.
-- **Task Management:** Create tasks with a title, status, and assigned person.
-- **Project Assignment:** Associate projects with users.
-- **Duplicate Prevention:** Prevent adding the same project more than once to a user's project list.
-- **Data Serialization:** Convert user, project, and task objects into dictionaries using `to_dict()`.
-- **Object Representation:** Use `__repr__()` methods to provide readable representations of objects.
-- **Class-Level Storage:** Use class attributes to maintain collections of users, projects, and tasks in memory.
+- **Add Users:** Register users using their names and email addresses.
+- **List Users:** Display all registered users.
+- **Create Projects:** Create projects with a title, description, and due date.
+- **Assign Projects:** Select an existing user to associate with a project.
+- **Create Tasks:** Add tasks to existing projects.
+- **List Projects:** Display project information available through the application's in-memory project collection.
+- **JSON Storage:** Save user and project information in `data/Project_data.json`.
+- **Input Validation:** Validate numeric selections when assigning projects and adding tasks.
+- **Empty Input Handling:** Prevent task creation when the task title is empty.
 
 ## 3. Technologies Used
 
-- **Python 3** – Main programming language.
-- **JSON** – Imported for working with JSON data.
-- **argparse** – Imported in the task module for potential command-line argument handling.
-- **Object-Oriented Programming (OOP)** – Used to structure the application into classes.
+- **Python 3:** Main programming language.
+- **argparse:** Creates and manages command-line arguments and subcommands.
+- **json:** Reads and writes application data in JSON format.
+- **Object-Oriented Programming:** Organises the application into `User`, `Project`, and `Task` classes.
 
-No third-party Python packages are required by the code shown.
+The application uses Python's standard library and does not require third-party packages for the functionality shown.
 
 ## 4. Project Structure
 
-The project can be organised as follows:
+The project follows this general structure:
 
 ```text
 project-management-system/
+│
+├── main.py
 │
 ├── models/
 │   ├── User.py
@@ -44,76 +49,24 @@ project-management-system/
 ├── data/
 │   └── Project_data.json
 │
-├── main.py
 └── README.md
 ```
 
-*Note: Adjust the filenames and folders to match your actual project structure.*
+- `main.py` contains the command-line interface and functions for managing users, projects, and tasks.
+- `models/User.py` defines the `User` class.
+- `models/Project.py` defines the `Project` class.
+- `models/Task.py` defines the `Task` class.
+- `templates/Project_template.py` provides the project template inherited by the `Project` class.
+- `data/Project_data.json` stores user and project information.
+- `README.md` documents the application and how to use it.
 
-## 5. Classes and Their Responsibilities
-
-### 5.1 User Class
-
-The `User` class represents an individual user in the system.
-
-**Attributes:**
-- `name`: The user's name.
-- `email`: The user's email address.
-- `projects`: A list of projects associated with the user.
-- `_users_list`: A class-level dictionary for storing users.
-- `_next_id`: A class-level counter reserved for potential user ID generation.
-
-**Methods:**
-- `add_projects(project)`: Adds a project to the user's list if it is not already present.
-- `add_user_to_list(object)`: Adds a user object to the class-level dictionary if the user's name is not already a key.
-- `to_dict()`: Converts the user object into a dictionary.
-- `create_user(name, email)`: Creates and registers a user object.
-- `__repr__()`: Returns a readable representation of the user.
-
-### 5.2 Project Class
-
-The `Project` class represents a project and inherits from `Project_template`.
-
-**Attributes:**
-- `title`: The project's name.
-- `description`: A description of the project.
-- `due_date`: The project's deadline.
-- `user`: The user assigned to the project, initially `None`.
-- `tasks`: A list of tasks associated with the project.
-- `_projects`: A class-level dictionary for storing project objects.
-
-**Methods:**
-- `to_dict()`: Converts the project object into a dictionary.
-- `assign_user(user)`: Assigns a user to the project and attempts to add the project to that user's project list.
-- `create_project()`: Retrieves project details through `get_project_details()`, creates a project, and stores it in the class-level dictionary.
-- `__repr__()`: Returns a readable representation of the project.
-
-**Dependency:** The class requires `Project_template` from `templates/Project_template.py`. The template must provide a compatible `get_project_details()` method for `create_project()` to work.
-
-### 5.3 Task Class
-
-The `Task` class represents an individual task within the project management system.
-
-**Attributes:**
-- `title`: The task's name.
-- `status`: The current status of the task, such as `Pending` or `Completed`.
-- `assigned_to`: The person responsible for the task.
-- `_tasks`: A class-level dictionary for storing task objects.
-
-**Methods:**
-- `to_dict()`: Converts the task object into a dictionary.
-- `create_task()`: Retrieves task details through `get_task_details()`, creates a task, and stores it in the class-level dictionary.
-- `__repr__()`: Returns a readable representation of the task.
-
-**Note:** The current `Task` class does not define `get_task_details()`. This method must be implemented before `create_task()` can work.
-
-## 6. Installation and Setup
+## 5. Installation and Setup
 
 ### Prerequisites
 
-Ensure that Python 3 is installed on your computer.
+Install Python 3 on your computer.
 
-Check your Python version by running:
+Verify the installation by running:
 
 ```bash
 python --version
@@ -121,7 +74,7 @@ python --version
 
 ### Clone the Repository
 
-If the project is hosted on GitHub, clone it using:
+Clone the repository from GitHub:
 
 ```bash
 git clone <repository-url>
@@ -133,40 +86,253 @@ Navigate into the project directory:
 cd project-management-system
 ```
 
+### Prepare the Data File
+
+Ensure that `data/Project_data.json` exists and contains the required top-level keys.
+
+Example:
+
+```json
+{
+    "Users": {},
+    "Projects": {}
+}
+```
+
+The application expects these keys when adding users, assigning projects, and creating tasks.
+
 ### Run the Application
 
-If `main.py` contains the application's entry point, run:
+Run the main Python file:
 
 ```bash
 python main.py
 ```
 
-The actual commands available will depend on how the application is implemented in `main.py`.
+The application uses `argparse` to process commands. A command must be supplied because the subparsers are configured with `required=True`.
 
-## 7. Data Storage
+## 6. Available Commands
 
-The classes include `to_dict()` methods that convert Python objects into dictionaries. These dictionaries can be serialised into JSON using Python's `json` module.
+The application defines the following command-line subcommands.
 
-For example:
+### 6.1 Add a User
 
-```python
-import json
+Creates a user with a name and email address and saves the user to the JSON file.
 
-user = User.create_user("Hope", "hope@example.com")
+**Syntax:**
 
-user_data = user.to_dict()
-
-print(json.dumps(user_data, indent=4))
+```bash
+python main.py add-user <name> <email>
 ```
 
-Example output:
+**Example:**
+
+```bash
+python main.py add-user Hope hope@example.com
+```
+
+**Expected output:**
+
+```text
+User created: Hope
+Email: hope@example.com
+```
+
+The new user is stored under the `Users` key in `Project_data.json`.
+
+### 6.2 List Users
+
+Displays the names of all registered users.
+
+**Command:**
+
+```bash
+python main.py list-users
+```
+
+**Example output:**
+
+```text
+List of users:
+Hope
+Kathomi
+Marveline
+```
+
+The command reads user records directly from `Project_data.json`.
+
+### 6.3 Create a Project
+
+Creates a project using its title, description, and due date. The application then displays the registered users and prompts you to select a user for the project.
+
+**Syntax:**
+
+```bash
+python main.py create-project <title> <description> <due_date>
+```
+
+**Example:**
+
+```bash
+python main.py create-project Roads "Road construction project" 30-12-2026
+```
+
+The application displays the project details and prompts:
+
+```text
+New project:
+Title: Roads
+Description: Road construction project
+Due_date: 30-12-2026
+
+Select a user to assign to this project:
+1. Hope
+2. Kathomi
+3. Marveline
+Enter the number of the user:
+```
+
+Enter the number corresponding to the user you want to assign.
+
+The selected user's `projects` list is updated, and the project information is saved in the `Projects` section of the JSON file.
+
+**Note:** The description should be enclosed in quotation marks when it contains spaces. In the current implementation, the project is saved in JSON by `assign_project_to_user()`.
+
+### 6.4 Create a Task
+
+Adds a task to an existing project.
+
+**Syntax:**
+
+```bash
+python main.py Create-task <title> <status> <assigned_to>
+```
+
+**Example:**
+
+```bash
+python main.py Create-task "Prepare budget" Pending Hope
+```
+
+The current implementation prompts the user to select a project and enter a task title.
+
+**Example interaction:**
+
+```text
+Available Projects:
+1. Roads
+2. Water Supply
+Select a project number: 1
+Enter the task title: Prepare budget
+```
+
+**Expected output:**
+
+```text
+Task 'Prepare budget' successfully added to 'Roads'.
+```
+
+The task title is added to the selected project's `tasks` list in the JSON file.
+
+**Important:** Although the command accepts `title`, `status`, and `assigned_to`, the current `create_tasks_for_projects()` function does not use these arguments. It asks for the task title interactively and stores only that title in the selected project's task list.
+
+### 6.5 List Projects
+
+**Command:**
+
+```bash
+python main.py list-projects
+```
+
+This command currently prints the `Project._projects` dictionary.
+
+However, the projects created through the command-line function are saved in the JSON file rather than being added to `Project._projects`. Consequently, this command may display an empty dictionary even when projects exist in the JSON file.
+
+To list saved projects correctly, the function should read the `Projects` key from `Project_data.json`.
+
+## 7. JSON Data Storage
+
+The application uses the `json` module to read and write data.
+
+### Example Data Structure
 
 ```json
 {
-    "name": "Hope",
-    "email": "hope@example.com",
-    "projects": []
+    "Users": {
+        "Hope": {
+            "name": "Hope",
+            "email": "hope@example.com",
+            "projects": [
+                "Roads"
+            ]
+        }
+    },
+    "Projects": {
+        "Roads": {
+            "title": "Roads",
+            "name": "Road construction project",
+            "due_date": "30-12-2026",
+            "tasks": [
+                "Prepare budget"
+            ]
+        }
+    }
 }
 ```
 
-**Important:** The `
+The `Users` section stores user details and the project titles associated with each user.
+
+The `Projects` section stores project details and the tasks added to each project.
+
+**Note:** In the current code, the project's description is saved under the key `name`, rather than `description`. Also, the `tasks` list stores task titles as strings, not complete task objects.
+
+## 8. Object-Oriented Programming
+
+The application uses three main classes.
+
+### User Class
+
+Represents registered users and includes methods for creating users, managing their project lists, and converting user data into dictionaries.
+
+### Project Class
+
+Represents projects, including their titles, descriptions, due dates, assigned users, and tasks. It inherits from `Project_template`.
+
+### Task Class
+
+Represents tasks using a title, status, and assigned person. Its `to_dict()` method converts task information into a dictionary.
+
+The current command-line task creation function does not instantiate the `Task` class; it stores task titles directly in the JSON file.
+
+## 9. Input Validation and Error Handling
+
+The application includes basic validation for project and task selection:
+
+- Checks whether any users exist before assigning a project.
+- Checks whether any projects exist before creating a task.
+- Rejects selections outside the available numbered options.
+- Handles non-numeric selections using `try` and `except ValueError`.
+- Prevents empty task titles from being saved.
+
+Further validation could be added to prevent duplicate project titles, duplicate task entries, invalid email addresses, and incorrectly formatted due dates.
+
+## 10. Current Limitations and Future Improvements
+
+The following improvements would make the application more complete:
+
+1. Update `list_projects()` to read saved projects from `Project_data.json`.
+2. Use the `description` key consistently instead of storing the project description under `name`.
+3. Implement `get_users_projects()` to display projects associated with a particular user.
+4. Update task creation to use the supplied title, status, and assigned person, or revise the command to match the interactive workflow.
+5. Store complete task records, including title, status, and assigned person.
+6. Prevent duplicate project titles and duplicate task entries.
+7. Validate project due dates and user email addresses.
+8. Improve error handling for missing or invalid JSON files.
+9. Add automated tests using `pytest`.
+10. Ensure that the `Project`, `User`, and `Task` class methods are consistent with the command-line functions.
+
+## 11. Conclusion
+
+The Python CLI Project Management System provides a foundation for managing users, projects, and tasks through terminal commands. It combines Python's `argparse` and `json` modules with Object-Oriented Programming to organise data and support basic project management workflows.
+
+Future enhancements, including improved validation, consistent data structures, project listing, and more complete task management, can make the application more reliable and easier to maintain.

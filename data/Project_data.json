@@ -5,23 +5,20 @@
             "email": "hope@email.coke",
             "projects": [
                 "roads",
-                "water"
+                "AI data center"
             ]
         },
         "kathomi": {
             "name": "kathomi",
             "email": "hope@email.coke",
             "projects": [
-                "water"
+                "water tower"
             ]
         },
         "marveline": {
             "name": "marveline",
             "email": "hope@email.coke",
-            "projects": [
-                "water",
-                "water"
-            ]
+            "projects": []
         },
         "Nyaga": {
             "name": "Nyaga",
@@ -30,6 +27,23 @@
                 "railway",
                 "rail"
             ]
+        },
+        "kukie": {
+            "name": "kukie",
+            "email": "kukie@email.com",
+            "projects": [
+                "water tower"
+            ]
+        },
+        "lewis": {
+            "name": "lewis",
+            "email": "lewis@email.com",
+            "projects": []
+        },
+        "hamilton": {
+            "name": "hamilton",
+            "email": "hamilton@email.com",
+            "projects": []
         }
     },
     "Projects": {
@@ -38,15 +52,21 @@
             "description": "goodroads",
             "due_date": "1",
             "tasks": [
-                "mahi-mahiu"
+                "gravel",
+                "more gravel"
             ]
         },
-        "water": {
-            "title": "water",
-            "name": "mombasa",
-            "due_date": "14-9-2009",
+        "water tower": {
+            "title": "water tower",
+            "name": "20000Ltower",
+            "due_date": "12-12-2026"
+        },
+        "AI data center": {
+            "title": "AI data center",
+            "name": "2GW",
+            "due_date": "20-12-2027",
             "tasks": [
-                "add pump"
+                "Design the data center"
             ]
         }
     },
@@ -55,6 +75,21 @@
             "title": "task",
             "status": "done",
             "assigned_to": "hope"
+        },
+        "add gravel": {
+            "title": "add gravel",
+            "status": "not yet done",
+            "assigned_to": "kukie"
+        },
+        "gravel": {
+            "title": "gravel",
+            "status": "ongoing",
+            "assigned_to": "kukie"
+        },
+        "more gravel": {
+            "title": "more gravel",
+            "status": "ongoing",
+            "assigned_to": "kukie"
         }
     }
 }
